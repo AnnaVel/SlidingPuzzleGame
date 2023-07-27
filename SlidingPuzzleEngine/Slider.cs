@@ -23,7 +23,7 @@ namespace SlidingPuzzleEngine
         {
             Position result;
 
-            bool positionIsFound = this.owner.TryGetSliderActualPosition(this, out result);
+            bool positionIsFound = this.owner.TryGetActualPositionForSlider(this, out result);
 
             if (positionIsFound)
             {
@@ -40,10 +40,26 @@ namespace SlidingPuzzleEngine
             return this.owner.TryMoveSlider(this, slideDirection);
         }
 
+        public bool TryMove(out SlideDirection slideDirection)
+        {
+            SlideDirection[] directions = Enum.GetValues<SlideDirection>();
+
+            foreach(SlideDirection direction in directions)
+            {
+                if(this.TryMove(direction))
+                {
+                    slideDirection = direction;
+                    return true;
+                }
+            }
+
+            slideDirection = default;
+            return false;
+        }
+
         public override bool Equals(object? obj)
         {
-            Slider other = obj as Slider;
-            if(other == null)
+            if (obj is not Slider other)
             {
                 return false;
             }

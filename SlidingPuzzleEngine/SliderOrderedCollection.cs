@@ -31,7 +31,7 @@ namespace SlidingPuzzleEngine
             }
         }
 
-        internal bool TryAdd(Position desiredPosition, Position actualPosition, out Slider resultSlider) 
+        internal bool TryAdd(Position desiredPosition, Position actualPosition, out Slider? resultSlider) 
         {
             resultSlider = null;
 
@@ -53,7 +53,19 @@ namespace SlidingPuzzleEngine
             return true;
         }
 
-        internal bool TryGetSliderActualPosition(Slider slider, out Position position)
+        internal bool TryGetSliderFromActualPosition(Position actualPosition, out Slider? slider)
+        {
+            if (!actualPositionToSliderCollection.ContainsKey(actualPosition))
+            {
+                slider = null;
+                return false;
+            }
+
+            slider = actualPositionToSliderCollection[actualPosition];
+            return true;
+        }
+
+        internal bool TryGetActualPositionForSlider(Slider slider, out Position position)
         {
             if(!sliderToActualPositionCollection.ContainsKey(slider))
             {

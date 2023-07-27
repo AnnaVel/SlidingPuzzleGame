@@ -17,8 +17,8 @@ namespace SlidingPuzzleEngine
 
         public Game(int width, int height)
         {
-            Utilities.ThrowExceptionIfLessThan(width, MinimalGamePlotSize, "width");
-            Utilities.ThrowExceptionIfLessThan(height, MinimalGamePlotSize, "height");
+            Utilities.ThrowExceptionIfLessThan(width, MinimalGamePlotSize, nameof(width));
+            Utilities.ThrowExceptionIfLessThan(height, MinimalGamePlotSize, nameof(height));
 
             this.width = width;
             this.height = height;
@@ -37,6 +37,16 @@ namespace SlidingPuzzleEngine
             {
                 return this.sliderOrderedCollection.AllSliders;
             }
+        }
+
+        public bool TryGetSliderFromActualPosition(Position actualPosition, out Slider? slider)
+        {
+            return this.sliderOrderedCollection.TryGetSliderFromActualPosition(actualPosition, out slider);
+        }
+
+        public bool TryGetActualPositionForSlider(Slider slider, out Position position)
+        {
+            return this.sliderOrderedCollection.TryGetActualPositionForSlider(slider, out position);
         }
 
         public bool GameIsSolved()
